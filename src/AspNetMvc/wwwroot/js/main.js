@@ -1589,11 +1589,23 @@
         that.parent().find('.js-sub-list').slideToggle("250");
       });
     });
-
   } catch (error) {
     console.log(error);
   }
+  try{
+    var arrow = $('.js-arrow');
+    arrow.each(function () {
+      var that = $(this);
+      if(that.hasClass( "open" )){
+        that.find(".arrow").toggleClass("up");
+        //that.toggleClass("open");
+        that.parent().find('.js-sub-list').slideToggle("250");
+      
+      }
+    });
+  }catch(error){
 
+  }
 
   try {
     // Hamburger Menu

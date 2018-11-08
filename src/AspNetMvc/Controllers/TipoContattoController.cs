@@ -10,19 +10,14 @@ using Models.Tabelle;
 
 namespace AspNetMvc.Controllers
 {
-    public class TipoContattoController : Controller
+    public class TipoContattoController : BaseController
     {
-        private readonly AnagraficaContext _context;
 
-        public TipoContattoController(AnagraficaContext context)
-        {
-            _context = context;
-        }
-
+        public TipoContattoController(AnagraficaContext context) :base(context){}
         // GET: TipoContatto
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TipoContatto.ToListAsync());
+            return View(await db.TipoContatto.ToListAsync());
         }
 
         // GET: TipoContatto/Details/5
@@ -33,7 +28,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var tipoContatto = await _context.TipoContatto
+            var tipoContatto = await db.TipoContatto
                 .FirstOrDefaultAsync(m => m.TipoContattoId == id);
             if (tipoContatto == null)
             {
@@ -58,8 +53,8 @@ namespace AspNetMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tipoContatto);
-                await _context.SaveChangesAsync();
+                db.Add(tipoContatto);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(tipoContatto);
@@ -73,7 +68,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var tipoContatto = await _context.TipoContatto.FindAsync(id);
+            var tipoContatto = await db.TipoContatto.FindAsync(id);
             if (tipoContatto == null)
             {
                 return NotFound();
@@ -97,8 +92,8 @@ namespace AspNetMvc.Controllers
             {
                 try
                 {
-                    _context.Update(tipoContatto);
-                    await _context.SaveChangesAsync();
+                    db.Update(tipoContatto);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,7 +119,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var tipoContatto = await _context.TipoContatto
+            var tipoContatto = await db.TipoContatto
                 .FirstOrDefaultAsync(m => m.TipoContattoId == id);
             if (tipoContatto == null)
             {
@@ -139,15 +134,15 @@ namespace AspNetMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tipoContatto = await _context.TipoContatto.FindAsync(id);
-            _context.TipoContatto.Remove(tipoContatto);
-            await _context.SaveChangesAsync();
+            var tipoContatto = await db.TipoContatto.FindAsync(id);
+            db.TipoContatto.Remove(tipoContatto);
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TipoContattoExists(int id)
         {
-            return _context.TipoContatto.Any(e => e.TipoContattoId == id);
+            return db.TipoContatto.Any(e => e.TipoContattoId == id);
         }
     }
 }

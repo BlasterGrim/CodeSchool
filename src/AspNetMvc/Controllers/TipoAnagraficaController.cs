@@ -10,19 +10,14 @@ using Models.Tabelle;
 
 namespace AspNetMvc.Controllers
 {
-    public class TipoAnagraficaController : Controller
+    public class TipoAnagraficaController : BaseController
     {
-        private readonly AnagraficaContext _context;
 
-        public TipoAnagraficaController(AnagraficaContext context)
-        {
-            _context = context;
-        }
-
+        public TipoAnagraficaController(AnagraficaContext context) :base(context){}
         // GET: TipoAnagrafica
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TipoAnagrafica.ToListAsync());
+            return View(await db.TipoAnagrafica.ToListAsync());
         }
 
         // GET: TipoAnagrafica/Details/5
@@ -33,7 +28,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var tipoAnagrafica = await _context.TipoAnagrafica
+            var tipoAnagrafica = await db.TipoAnagrafica
                 .FirstOrDefaultAsync(m => m.TipoAnagraficaId == id);
             if (tipoAnagrafica == null)
             {
@@ -58,8 +53,8 @@ namespace AspNetMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tipoAnagrafica);
-                await _context.SaveChangesAsync();
+                db.Add(tipoAnagrafica);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(tipoAnagrafica);
@@ -73,7 +68,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var tipoAnagrafica = await _context.TipoAnagrafica.FindAsync(id);
+            var tipoAnagrafica = await db.TipoAnagrafica.FindAsync(id);
             if (tipoAnagrafica == null)
             {
                 return NotFound();
@@ -97,8 +92,8 @@ namespace AspNetMvc.Controllers
             {
                 try
                 {
-                    _context.Update(tipoAnagrafica);
-                    await _context.SaveChangesAsync();
+                    db.Update(tipoAnagrafica);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,7 +119,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var tipoAnagrafica = await _context.TipoAnagrafica
+            var tipoAnagrafica = await db.TipoAnagrafica
                 .FirstOrDefaultAsync(m => m.TipoAnagraficaId == id);
             if (tipoAnagrafica == null)
             {
@@ -139,15 +134,15 @@ namespace AspNetMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tipoAnagrafica = await _context.TipoAnagrafica.FindAsync(id);
-            _context.TipoAnagrafica.Remove(tipoAnagrafica);
-            await _context.SaveChangesAsync();
+            var tipoAnagrafica = await db.TipoAnagrafica.FindAsync(id);
+            db.TipoAnagrafica.Remove(tipoAnagrafica);
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TipoAnagraficaExists(int id)
         {
-            return _context.TipoAnagrafica.Any(e => e.TipoAnagraficaId == id);
+            return db.TipoAnagrafica.Any(e => e.TipoAnagraficaId == id);
         }
     }
 }

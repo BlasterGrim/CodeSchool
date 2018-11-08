@@ -10,19 +10,15 @@ using Models.Tabelle;
 
 namespace AspNetMvc.Controllers
 {
-    public class IndirizziController : Controller
+    public class IndirizziController : BaseController
     {
-        private readonly AnagraficaContext _context;
 
-        public IndirizziController(AnagraficaContext context)
-        {
-            _context = context;
-        }
+        public IndirizziController(AnagraficaContext context) :base(context){}
 
         // GET: Indirizzi
         public async Task<IActionResult> Index()
         {
-            var anagraficaContext = _context.Indirizzi.Include(i => i.Anagrafica).Include(i => i.TipoIndirizzo);
+            var anagraficaContext = db.Indirizzi.Include(i => i.Anagrafica).Include(i => i.TipoIndirizzo);
             return View(await anagraficaContext.ToListAsync());
         }
 
@@ -34,7 +30,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var indirizzi = await _context.Indirizzi
+            var indirizzi = await db.Indirizzi
                 .Include(i => i.Anagrafica)
                 .Include(i => i.TipoIndirizzo)
                 .FirstOrDefaultAsync(m => m.IndirizziId == id);
@@ -49,8 +45,8 @@ namespace AspNetMvc.Controllers
         // GET: Indirizzi/Create
         public IActionResult Create()
         {
-            ViewData["AnagraficaId"] = new SelectList(_context.Anagrafica, "AnagraficaId", "AnagraficaId");
-            ViewData["TipoIndirizzoId"] = new SelectList(_context.TipoIndirizzo, "TipoIndirizzoId", "TipoIndirizzoId");
+            ViewData["AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "AnagraficaId");
+            ViewData["TipoIndirizzoId"] = new SelectList(db.TipoIndirizzo, "TipoIndirizzoId", "TipoIndirizzoId");
             return View();
         }
 
@@ -63,12 +59,12 @@ namespace AspNetMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(indirizzi);
-                await _context.SaveChangesAsync();
+                db.Add(indirizzi);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnagraficaId"] = new SelectList(_context.Anagrafica, "AnagraficaId", "AnagraficaId", indirizzi.AnagraficaId);
-            ViewData["TipoIndirizzoId"] = new SelectList(_context.TipoIndirizzo, "TipoIndirizzoId", "TipoIndirizzoId", indirizzi.TipoIndirizzoId);
+            ViewData["AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "AnagraficaId", indirizzi.AnagraficaId);
+            ViewData["TipoIndirizzoId"] = new SelectList(db.TipoIndirizzo, "TipoIndirizzoId", "TipoIndirizzoId", indirizzi.TipoIndirizzoId);
             return View(indirizzi);
         }
 
@@ -80,13 +76,13 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var indirizzi = await _context.Indirizzi.FindAsync(id);
+            var indirizzi = await db.Indirizzi.FindAsync(id);
             if (indirizzi == null)
             {
                 return NotFound();
             }
-            ViewData["AnagraficaId"] = new SelectList(_context.Anagrafica, "AnagraficaId", "AnagraficaId", indirizzi.AnagraficaId);
-            ViewData["TipoIndirizzoId"] = new SelectList(_context.TipoIndirizzo, "TipoIndirizzoId", "TipoIndirizzoId", indirizzi.TipoIndirizzoId);
+            ViewData["AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "AnagraficaId", indirizzi.AnagraficaId);
+            ViewData["TipoIndirizzoId"] = new SelectList(db.TipoIndirizzo, "TipoIndirizzoId", "TipoIndirizzoId", indirizzi.TipoIndirizzoId);
             return View(indirizzi);
         }
 
@@ -106,8 +102,8 @@ namespace AspNetMvc.Controllers
             {
                 try
                 {
-                    _context.Update(indirizzi);
-                    await _context.SaveChangesAsync();
+                    db.Update(indirizzi);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,8 +118,8 @@ namespace AspNetMvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnagraficaId"] = new SelectList(_context.Anagrafica, "AnagraficaId", "AnagraficaId", indirizzi.AnagraficaId);
-            ViewData["TipoIndirizzoId"] = new SelectList(_context.TipoIndirizzo, "TipoIndirizzoId", "TipoIndirizzoId", indirizzi.TipoIndirizzoId);
+            ViewData["AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "AnagraficaId", indirizzi.AnagraficaId);
+            ViewData["TipoIndirizzoId"] = new SelectList(db.TipoIndirizzo, "TipoIndirizzoId", "TipoIndirizzoId", indirizzi.TipoIndirizzoId);
             return View(indirizzi);
         }
 
@@ -135,7 +131,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var indirizzi = await _context.Indirizzi
+            var indirizzi = await db.Indirizzi
                 .Include(i => i.Anagrafica)
                 .Include(i => i.TipoIndirizzo)
                 .FirstOrDefaultAsync(m => m.IndirizziId == id);
@@ -152,15 +148,15 @@ namespace AspNetMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var indirizzi = await _context.Indirizzi.FindAsync(id);
-            _context.Indirizzi.Remove(indirizzi);
-            await _context.SaveChangesAsync();
+            var indirizzi = await db.Indirizzi.FindAsync(id);
+            db.Indirizzi.Remove(indirizzi);
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool IndirizziExists(int id)
         {
-            return _context.Indirizzi.Any(e => e.IndirizziId == id);
+            return db.Indirizzi.Any(e => e.IndirizziId == id);
         }
     }
 }

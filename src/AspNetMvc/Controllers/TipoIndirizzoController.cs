@@ -10,19 +10,15 @@ using Models.Tabelle;
 
 namespace AspNetMvc.Controllers
 {
-    public class TipoIndirizzoController : Controller
+    public class TipoIndirizzoController : BaseController
     {
-        private readonly AnagraficaContext _context;
 
-        public TipoIndirizzoController(AnagraficaContext context)
-        {
-            _context = context;
-        }
+        public TipoIndirizzoController(AnagraficaContext context) :base(context){}
 
         // GET: TipoIndirizzo
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TipoIndirizzo.ToListAsync());
+            return View(await db.TipoIndirizzo.ToListAsync());
         }
 
         // GET: TipoIndirizzo/Details/5
@@ -33,7 +29,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var tipoIndirizzo = await _context.TipoIndirizzo
+            var tipoIndirizzo = await db.TipoIndirizzo
                 .FirstOrDefaultAsync(m => m.TipoIndirizzoId == id);
             if (tipoIndirizzo == null)
             {
@@ -58,8 +54,8 @@ namespace AspNetMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tipoIndirizzo);
-                await _context.SaveChangesAsync();
+                db.Add(tipoIndirizzo);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(tipoIndirizzo);
@@ -73,7 +69,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var tipoIndirizzo = await _context.TipoIndirizzo.FindAsync(id);
+            var tipoIndirizzo = await db.TipoIndirizzo.FindAsync(id);
             if (tipoIndirizzo == null)
             {
                 return NotFound();
@@ -97,8 +93,8 @@ namespace AspNetMvc.Controllers
             {
                 try
                 {
-                    _context.Update(tipoIndirizzo);
-                    await _context.SaveChangesAsync();
+                    db.Update(tipoIndirizzo);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,7 +120,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var tipoIndirizzo = await _context.TipoIndirizzo
+            var tipoIndirizzo = await db.TipoIndirizzo
                 .FirstOrDefaultAsync(m => m.TipoIndirizzoId == id);
             if (tipoIndirizzo == null)
             {
@@ -139,15 +135,15 @@ namespace AspNetMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tipoIndirizzo = await _context.TipoIndirizzo.FindAsync(id);
-            _context.TipoIndirizzo.Remove(tipoIndirizzo);
-            await _context.SaveChangesAsync();
+            var tipoIndirizzo = await db.TipoIndirizzo.FindAsync(id);
+            db.TipoIndirizzo.Remove(tipoIndirizzo);
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TipoIndirizzoExists(int id)
         {
-            return _context.TipoIndirizzo.Any(e => e.TipoIndirizzoId == id);
+            return db.TipoIndirizzo.Any(e => e.TipoIndirizzoId == id);
         }
     }
 }

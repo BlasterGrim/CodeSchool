@@ -10,19 +10,15 @@ using Models.Tabelle;
 
 namespace AspNetMvc.Controllers
 {
-    public class ContattiController : Controller
+    public class ContattiController : BaseController
     {
-        private readonly AnagraficaContext _context;
-
-        public ContattiController(AnagraficaContext context)
-        {
-            _context = context;
-        }
+        
+        public ContattiController(AnagraficaContext context):base(context){}
 
         // GET: Contatti
         public async Task<IActionResult> Index()
         {
-            var anagraficaContext = _context.Contatti.Include(c => c.Anagrafica).Include(c => c.TipoContatto);
+            var anagraficaContext = db.Contatti.Include(c => c.Anagrafica).Include(c => c.TipoContatto);
             return View(await anagraficaContext.ToListAsync());
         }
 
@@ -34,7 +30,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var contatti = await _context.Contatti
+            var contatti = await db.Contatti
                 .Include(c => c.Anagrafica)
                 .Include(c => c.TipoContatto)
                 .FirstOrDefaultAsync(m => m.ContattiId == id);
@@ -49,8 +45,8 @@ namespace AspNetMvc.Controllers
         // GET: Contatti/Create
         public IActionResult Create()
         {
-            ViewData["AnagraficaId"] = new SelectList(_context.Anagrafica, "AnagraficaId", "AnagraficaId");
-            ViewData["TipoContattoId"] = new SelectList(_context.TipoContatto, "TipoContattoId", "TipoContattoId");
+            ViewData["AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "AnagraficaId");
+            ViewData["TipoContattoId"] = new SelectList(db.TipoContatto, "TipoContattoId", "TipoContattoId");
             return View();
         }
 
@@ -63,12 +59,12 @@ namespace AspNetMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(contatti);
-                await _context.SaveChangesAsync();
+                db.Add(contatti);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnagraficaId"] = new SelectList(_context.Anagrafica, "AnagraficaId", "AnagraficaId", contatti.AnagraficaId);
-            ViewData["TipoContattoId"] = new SelectList(_context.TipoContatto, "TipoContattoId", "TipoContattoId", contatti.TipoContattoId);
+            ViewData["AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "AnagraficaId", contatti.AnagraficaId);
+            ViewData["TipoContattoId"] = new SelectList(db.TipoContatto, "TipoContattoId", "TipoContattoId", contatti.TipoContattoId);
             return View(contatti);
         }
 
@@ -80,13 +76,13 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var contatti = await _context.Contatti.FindAsync(id);
+            var contatti = await db.Contatti.FindAsync(id);
             if (contatti == null)
             {
                 return NotFound();
             }
-            ViewData["AnagraficaId"] = new SelectList(_context.Anagrafica, "AnagraficaId", "AnagraficaId", contatti.AnagraficaId);
-            ViewData["TipoContattoId"] = new SelectList(_context.TipoContatto, "TipoContattoId", "TipoContattoId", contatti.TipoContattoId);
+            ViewData["AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "AnagraficaId", contatti.AnagraficaId);
+            ViewData["TipoContattoId"] = new SelectList(db.TipoContatto, "TipoContattoId", "TipoContattoId", contatti.TipoContattoId);
             return View(contatti);
         }
 
@@ -106,8 +102,8 @@ namespace AspNetMvc.Controllers
             {
                 try
                 {
-                    _context.Update(contatti);
-                    await _context.SaveChangesAsync();
+                    db.Update(contatti);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,8 +118,8 @@ namespace AspNetMvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnagraficaId"] = new SelectList(_context.Anagrafica, "AnagraficaId", "AnagraficaId", contatti.AnagraficaId);
-            ViewData["TipoContattoId"] = new SelectList(_context.TipoContatto, "TipoContattoId", "TipoContattoId", contatti.TipoContattoId);
+            ViewData["AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "AnagraficaId", contatti.AnagraficaId);
+            ViewData["TipoContattoId"] = new SelectList(db.TipoContatto, "TipoContattoId", "TipoContattoId", contatti.TipoContattoId);
             return View(contatti);
         }
 
@@ -135,7 +131,7 @@ namespace AspNetMvc.Controllers
                 return NotFound();
             }
 
-            var contatti = await _context.Contatti
+            var contatti = await db.Contatti
                 .Include(c => c.Anagrafica)
                 .Include(c => c.TipoContatto)
                 .FirstOrDefaultAsync(m => m.ContattiId == id);
@@ -152,15 +148,15 @@ namespace AspNetMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contatti = await _context.Contatti.FindAsync(id);
-            _context.Contatti.Remove(contatti);
-            await _context.SaveChangesAsync();
+            var contatti = await db.Contatti.FindAsync(id);
+            db.Contatti.Remove(contatti);
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ContattiExists(int id)
         {
-            return _context.Contatti.Any(e => e.ContattiId == id);
+            return db.Contatti.Any(e => e.ContattiId == id);
         }
     }
 }

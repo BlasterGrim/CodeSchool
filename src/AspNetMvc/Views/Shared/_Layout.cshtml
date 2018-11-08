@@ -53,14 +53,15 @@
     </environment>
 </head>
  <body class="animsition">
-    <partial name="_CookieConsentPartial" />
     <div class="page-wrapper">
         <partial name="_MenuLeftPartial"/>
         <div class="page-container2">
             <partial name="_HeaderDesktopPartial"/>
             <partial name="_MenuRigthPartial"/>
             <partial name="_BreadcrumPartial"/>
-            @RenderBody()
+            <section class="statistic">
+                @RenderBody()
+            </section>
             <section>
                 <div class="container-fluid">
                     <div class="row">

@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AspNetMvc.Models;
+using Models;
 
 namespace AspNetMvc.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        public HomeController(AnagraficaContext ctx) :base(ctx){}
         public IActionResult Index()
         {
             return View();
