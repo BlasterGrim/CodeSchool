@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Models.Tabelle;
+using Models.Views;
 
 namespace AspNetMvc.Controllers
 {
@@ -17,7 +18,7 @@ namespace AspNetMvc.Controllers
         // GET: TipoAnagrafica
         public async Task<IActionResult> Index()
         {
-            return View(await db.TipoAnagrafica.ToListAsync());
+            return View(await GetConvertedListAsync());
         }
 
         // GET: TipoAnagrafica/Details/5
@@ -34,8 +35,8 @@ namespace AspNetMvc.Controllers
             {
                 return NotFound();
             }
-
-            return View(tipoAnagrafica);
+            var tpAnagrafica = new TipoAnagraficaView(tipoAnagrafica);
+            return View(tpAnagrafica);
         }
 
         // GET: TipoAnagrafica/Create
@@ -57,7 +58,8 @@ namespace AspNetMvc.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tipoAnagrafica);
+            var tpAnagrafica = new TipoAnagraficaView(tipoAnagrafica);
+            return View(tpAnagrafica);
         }
 
         // GET: TipoAnagrafica/Edit/5
@@ -73,7 +75,8 @@ namespace AspNetMvc.Controllers
             {
                 return NotFound();
             }
-            return View(tipoAnagrafica);
+            var tpAnagrafica = new TipoAnagraficaView(tipoAnagrafica);
+            return View(tpAnagrafica);
         }
 
         // POST: TipoAnagrafica/Edit/5
@@ -108,7 +111,8 @@ namespace AspNetMvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tipoAnagrafica);
+            var tpAnagrafica = new TipoAnagraficaView(tipoAnagrafica);
+            return View(tpAnagrafica);
         }
 
         // GET: TipoAnagrafica/Delete/5
@@ -125,8 +129,8 @@ namespace AspNetMvc.Controllers
             {
                 return NotFound();
             }
-
-            return View(tipoAnagrafica);
+            var tpAnagrafica = new TipoAnagraficaView(tipoAnagrafica);
+            return View(tpAnagrafica);
         }
 
         // POST: TipoAnagrafica/Delete/5
@@ -139,7 +143,14 @@ namespace AspNetMvc.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        private async Task<List<TipoAnagraficaView>> GetConvertedListAsync(){
+            List<TipoAnagraficaView> lst = new List<TipoAnagraficaView>();
+            var items = await db.TipoAnagrafica.ToListAsync();
+            foreach(var item in items ){
+                lst.Add(new TipoAnagraficaView(item));
+            }
+            return lst;
+        }
         private bool TipoAnagraficaExists(int id)
         {
             return db.TipoAnagrafica.Any(e => e.TipoAnagraficaId == id);

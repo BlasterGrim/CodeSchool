@@ -1,69 +1,91 @@
 @model Models.Tabelle.Anagrafica
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Cancella Anagrafica";
 }
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Anagrafica</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CodiceAnagrafica)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CodiceAnagrafica)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsAzienda)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsAzienda)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Cognome)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Cognome)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RagioneSociale)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RagioneSociale)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PartitaIva)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PartitaIva)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CodiceFiscale)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CodiceFiscale)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoAnagrafica)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TipoAnagrafica.TipoAnagraficaId)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="AnagraficaId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>@ViewData["Title"]</strong>
+                </div>
+                <div class="card-body card-block">
+                    <div class="form-horizontal"> 
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.CodiceAnagrafica)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.CodiceAnagrafica)</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.IsAzienda)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.IsAzienda)</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.Nome)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.Nome)</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.Cognome)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.Cognome)</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.RagioneSociale)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.RagioneSociale)</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.PartitaIva)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.PartitaIva)</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.CodiceFiscale)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.CodiceFiscale)</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.TipoAnagrafica)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.TipoAnagrafica.Descrizione)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="AnagraficaId" />
+                        <button type="submit" class="btn btn-danger" ><i class="fa fa-trash"></i> Elimina</button>
+                        <a asp-action="Index" class="btn btn-info"><i class="fa fa-caret-square-o-left"></i> Indietro</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

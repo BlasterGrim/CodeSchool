@@ -1,69 +1,71 @@
 @model Models.Tabelle.Anagrafica
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crezione Anagrafica";
 }
-
-<h2>Create</h2>
-
-<h4>Anagrafica</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CodiceAnagrafica" class="control-label"></label>
-                <input asp-for="CodiceAnagrafica" class="form-control" />
-                <span asp-validation-for="CodiceAnagrafica" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsAzienda" /> @Html.DisplayNameFor(model => model.IsAzienda)
-                    </label>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>@ViewData["Title"]</strong>
+                </div>
+                <div class="card-body card-block">
+                    <form asp-action="Create" class="form-horizontal"> 
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="CodiceAnagrafica" class="control-label"></label>
+                            <input asp-for="CodiceAnagrafica" class="form-control-sm form-control />
+                            <span asp-validation-for="CodiceAnagrafica" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <div class="checkbox">
+                                    <label for="IsAzienda" class="form-check-label ">
+                                        <input asp-for="IsAzienda" class="form-check-input"> @Html.DisplayNameFor(model => model.IsAzienda)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Nome" class="control-label"></label>
+                            <input asp-for="Nome" class="form-control-sm form-control" />
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Cognome" class="control-label"></label>
+                            <input asp-for="Cognome" class="form-control-sm form-control" />
+                            <span asp-validation-for="Cognome" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RagioneSociale" class="control-label"></label>
+                            <input asp-for="RagioneSociale" class="form-control-sm form-control" />
+                            <span asp-validation-for="RagioneSociale" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PartitaIva" class="control-label"></label>
+                            <input asp-for="PartitaIva" class="form-control-sm form-control" />
+                            <span asp-validation-for="PartitaIva" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CodiceFiscale" class="control-label"></label>
+                            <input asp-for="CodiceFiscale" class="form-control-sm form-control" />
+                            <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TipoAnagraficaId" class="control-label"></label>
+                            <select asp-for="TipoAnagraficaId" class ="form-control-sm form-control" asp-items="ViewBag.TipoAnagraficaId"></select>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success" ><i class="fa  fa-save"></i> Salva</button>
+                    <a asp-action="Index" class="btn btn-danger"><i class="fa fa-caret-square-o-left"></i> Indietro</a>
                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cognome" class="control-label"></label>
-                <input asp-for="Cognome" class="form-control" />
-                <span asp-validation-for="Cognome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RagioneSociale" class="control-label"></label>
-                <input asp-for="RagioneSociale" class="form-control" />
-                <span asp-validation-for="RagioneSociale" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PartitaIva" class="control-label"></label>
-                <input asp-for="PartitaIva" class="form-control" />
-                <span asp-validation-for="PartitaIva" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CodiceFiscale" class="control-label"></label>
-                <input asp-for="CodiceFiscale" class="form-control" />
-                <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TipoAnagraficaId" class="control-label"></label>
-                <select asp-for="TipoAnagraficaId" class ="form-control" asp-items="ViewBag.TipoAnagraficaId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
