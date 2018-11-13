@@ -39,7 +39,6 @@ namespace AspNetMvc.Controllers {
         public async Task<IActionResult> Create([Bind("TipoAnagraficaId,Descrizione")] TipoAnagraficaView view){
             var item = ConvertFromView(view);
             if (ModelState.IsValid){
-
                 db.Add(item);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

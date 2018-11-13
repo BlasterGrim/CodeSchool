@@ -7,15 +7,62 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Models.Tabelle;
+using Models.Views;
 
 namespace AspNetMvc.Controllers {
     public class AnagraficaController : BaseController {
         public AnagraficaController(AnagraficaContext context):base(context){}
         // GET: Anagrafica
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> IndexOld() {
             var anagraficaContext = db.Anagrafica.Include(a => a.TipoAnagrafica);
             return View(await anagraficaContext.ToListAsync());
         }
+        public async Task<IActionResult> Index (){
+            List<AnagraficaView> views  = new List<AnagraficaView>(); 
+            var items = await db.Anagrafica.Include(x => x.TipoAnagrafica).ToListAsync();
+            foreach (var item in items) {
+                AnagraficaView anag = new AnagraficaView {
+                    AnagraficaId = item.AnagraficaId,
+                    CodiceAnagrafica = item.CodiceAnagrafica,
+                    IsAzienda = item.IsAzienda,
+                    Nome = item.Nome,
+                    Cognome = item.Cognome,
+                    RagioneSociale = item.RagioneSociale,
+                    PartitaIva = item.PartitaIva,
+                    CodiceFiscale = item.CodiceFiscale,
+                    TipoAnagraficaId = item.TipoAnagraficaId
+                };
+                if (item.TipoAnagrafica != null){
+                    anag.TipoAnagrafica = new TipoAnagraficaView(item.TipoAnagrafica);
+                }
+                var contatti = await db.Contatti.Include(x => x.TipoContatto).Where(x=> x.AnagraficaId == item.AnagraficaId).ToListAsync();
+                if(contatti!=null && contatti.Count>0){
+                    anag.Contatti = new List<ContattiView>();
+                    foreach (var contatto in contatti) {
+                        ContattiView con = new ContattiView(){
+                            ContattiId = contatto.ContattiId,
+                            Valore = contatto.Valore,
+                            Note = contatto.Note,
+                            AnagraficaId = anag.AnagraficaId
+                        };
+                        if(contatto.TipoContatto!=null){
+                            TipoContattoView tpCont = new TipoContattoView{
+                                TipoContattoId = contatto.TipoContatto.TipoContattoId,
+                                Descrizione = contatto.TipoContatto.Descrizione
+                            };
+                            con.TipoContatto = tpCont;
+                            con.TipoContattoId = contatto.TipoContattoId;
+                        }
+                        anag.Contatti.Add(con);                     
+                    }
+                }
+                var indirizzi = await db.Indirizzi.Include(x => x.TipoIndirizzo).Where(x=> x.AnagraficaId == item.AnagraficaId).ToListAsync();
+
+                views.Add(anag);
+            }    
+            return View(views);
+        }
+
         // GET: Anagrafica/Details/5
         public async Task<IActionResult> Details(int? id) {
             if (id == null) {
