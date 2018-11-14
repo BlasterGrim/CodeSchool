@@ -1,5 +1,23 @@
+using Models.Tabelle;
+
 namespace Models.Views {
     public class ContattiView {
+        public ContattiView()
+        {
+            ContattiId = -1;
+            Valore = null;
+            Note = null;
+            AnagraficaId = -1;
+            TipoContattoId = -1;
+        }
+        public ContattiView(Contatti tbl)
+        {
+            AnagraficaId = tbl.AnagraficaId;
+            Valore = tbl.Valore;
+            Note = tbl.Note;
+            AnagraficaId = tbl.AnagraficaId;
+            TipoContattoId = tbl.TipoContattoId;
+        }
         public int ContattiId {get;set;}
         public string Valore{get;set;}
         public string Note {get;set;}
