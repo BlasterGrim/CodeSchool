@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 using Models.Tabelle;
 
-namespace Models.Views {
-    public class ContattiView {
+namespace Models.Views
+{
+    public class ContattiView
+    {
         public ContattiView()
         {
             ContattiId = -1;
@@ -12,17 +15,19 @@ namespace Models.Views {
         }
         public ContattiView(Contatti tbl)
         {
-            AnagraficaId = tbl.AnagraficaId;
             Valore = tbl.Valore;
             Note = tbl.Note;
             AnagraficaId = tbl.AnagraficaId;
             TipoContattoId = tbl.TipoContattoId;
         }
-        public int ContattiId {get;set;}
-        public string Valore{get;set;}
-        public string Note {get;set;}
-        public int AnagraficaId {get;set;}
-         public int TipoContattoId {get;set;}
-        public TipoContattoView TipoContatto {get;set;}
+        public int ContattiId { get; set; }
+
+        [Required]
+        public string Valore { get; set; }
+        public string Note { get; set; }
+        public int AnagraficaId { get; set; }
+        public AnagraficaView Anagrafica { get; set; }
+        public int TipoContattoId { get; set; }
+        public TipoContattoView TipoContatto { get; set; }
     }
 }

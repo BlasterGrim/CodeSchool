@@ -58,17 +58,61 @@ ViewData["Title"] = "Creazione Anagrafica";
                             <label asp-for="TipoAnagraficaId" class="control-label"></label>
                             <select asp-for="TipoAnagraficaId" class="form-control-sm form-control" asp-items="ViewBag.TipoAnagraficaId"></select>
                         </div>
-                        <!--prova form-->
-                        <div class="form-group">
-                            <label class="control-label"></label>
-                            <!--input class="form-control-sm form-control"-->
-                            <input class="form-control-sm form-control" asp-items="Valore" />
-                            <!--span asp-validation-for="CodiceFiscale" class="text-danger"></span-->
+                        <!--prova form contatti-->
+                        <div class="card-header">
+                            <strong>Creazione contatti relativi</strong>
                         </div>
                         <div class="form-group">
-                            <label asp-for="TipoAnagraficaId" class="control-label"></label>
-                            <select asp-for="TipoAnagraficaId" class="form-control-sm form-control" asp-items="ViewBag.TipoAnagraficaId"></select>
+                            <label asp-for="Contatti.Valore" class="control-label"></label>
+                            <input asp-for="Contatti.Valore" class="form-control-sm form-control" />
+                            <span asp-validation-for="Contatti.Valore" class="text-danger"></span>
                         </div>
+                        <div class="form-group">
+                            <label asp-for="Contatti.Note" class="control-label"></label>
+                            <input asp-for="Contatti.Note" class="form-control-sm form-control"  />
+                            <span asp-validation-for="Contatti.Note" class="text-danger"></span>
+                        </div>
+                        <!--fine-->
+                        <!--prova form indirizzi-->
+                        <div class="card-header">
+                            <strong>Creazione indirizzi relativi</strong>
+                        </div>
+                        <div class="form-group">
+                            <label for="Nazione" class="control-label">Nazione</label>
+                            <input asp-for="CodiceFiscale" class="form-control-sm form-control" name="Valore" />
+                            <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Regione" class="control-label">Regione</label>
+                            <input asp-for="CodiceFiscale" class="form-control-sm form-control" name="Note" />
+                            <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Provincia" class="control-label">Provincia</label>
+                            <input asp-for="CodiceFiscale" class="form-control-sm form-control" name="Note" />
+                            <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Citta" class="control-label">Città</label>
+                            <input asp-for="CodiceFiscale" class="form-control-sm form-control" name="Note" />
+                            <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Denominazione" class="control-label">Denominazione</label>
+                            <input asp-for="CodiceFiscale" class="form-control-sm form-control" name="Note" />
+                            <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="CAP" class="control-label">CAP</label>
+                            <input asp-for="CodiceFiscale" class="form-control-sm form-control" name="Note" />
+                            <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Numero" class="control-label">Numero</label>
+                            <input asp-for="CodiceFiscale" class="form-control-sm form-control" name="Note" />
+                            <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
+                        </div>
+                        <!--fine-->
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Salva</button>

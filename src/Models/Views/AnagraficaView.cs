@@ -30,7 +30,10 @@ namespace Models.Views
             CodiceFiscale = tbl.CodiceFiscale;
             TipoAnagraficaId = tbl.TipoAnagraficaId;
         }
+        [Key]
         public int AnagraficaId { get; set; }
+        
+        [Required]
         public string CodiceAnagrafica { get; set; }
         public bool IsAzienda { get; set; }
         public string Nome { get; set; }
@@ -40,7 +43,9 @@ namespace Models.Views
         public string CodiceFiscale { get; set; }
         public int TipoAnagraficaId { get; set; }
         public TipoAnagraficaView TipoAnagrafica { get; set; }
-        public ICollection<ContattiView> Contatti { get; set; }
-        public ICollection<IndirizziView> Indirizzi { get; set; }
+        //public ICollection<ContattiView> Contatti { get; set; }
+        //public ICollection<IndirizziView> Indirizzi { get; set; }
+        public ContattiView Contatti { get; set; }
+        public IndirizziView Indirizzi { get; set; }
     }
 }

@@ -5,7 +5,7 @@ namespace Models.Views
 {
     public class TipoAnagraficaView {
         public TipoAnagraficaView(){
-            TipoAnagraficaId =-1;
+            TipoAnagraficaId = -1;
             Descrizione = null;
         }
         public TipoAnagraficaView(TipoAnagrafica tbl){
