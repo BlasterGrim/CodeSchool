@@ -45,8 +45,8 @@ namespace AspNetMvc.Controllers
                 var contatti = await db.Contatti.Include(x => x.TipoContatto).Where(x => x.AnagraficaId == item.AnagraficaId).ToListAsync();
                 if (contatti != null && contatti.Count > 0)
                 {
-                    //anag.Contatti = new List<ContattiView>();
-                    anag.Contatti = new ContattiView();
+                    anag.Contatti = new List<ContattiView>();
+                    //anag.Contatti = new ContattiView();
                     foreach (var contatto in contatti)
                     {
                         ContattiView con = new ContattiView()
@@ -66,15 +66,15 @@ namespace AspNetMvc.Controllers
                             con.TipoContatto = tpCont;
                             con.TipoContattoId = contatto.TipoContattoId;
                         }
-                        //anag.Contatti.Add(con);
-                        anag.Contatti = con;
+                        anag.Contatti.Add(con);
+                        //anag.Contatti = con;
                     }
                 }
                 var indirizzi = await db.Indirizzi.Include(x => x.TipoIndirizzo).Where(x => x.AnagraficaId == item.AnagraficaId).ToListAsync();
                 if (indirizzi != null && indirizzi.Count > 0)
                 {
-                    //anag.Indirizzi = new List<IndirizziView>();
-                    anag.Indirizzi = new IndirizziView();
+                    anag.Indirizzi = new List<IndirizziView>();
+                    //anag.Indirizzi = new IndirizziView();
                     foreach (var indirizzo in indirizzi)
                     {
                         IndirizziView ind = new IndirizziView()
@@ -99,8 +99,8 @@ namespace AspNetMvc.Controllers
                             ind.TipoIndirizzo = tpInd;
                             ind.TipoIndirizzoId = indirizzo.TipoIndirizzoId;
                         }
-                        //anag.Indirizzi.Add(ind);
-                        anag.Indirizzi = ind;
+                        anag.Indirizzi.Add(ind);
+                        //anag.Indirizzi = ind;
                     }
                 }
                 views.Add(anag);
@@ -128,7 +128,8 @@ namespace AspNetMvc.Controllers
         public IActionResult Create()
         {
             ViewData["TipoAnagraficaId"] = new SelectList(db.TipoAnagrafica, "TipoAnagraficaId", "Descrizione");
-            ViewData["Contatti.Valore"] = new SelectList(db.Contatti, "Valore");
+            //ViewData["Contatti.AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "Descrizione");
+            ViewData["TipoContattoId"] = new SelectList(db.TipoContatto, "TipoContattoId", "Descrizione");
             return View();
         }
 
@@ -137,20 +138,18 @@ namespace AspNetMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AnagraficaId,CodiceAnagrafica,IsAzienda,Nome,Cognome,RagioneSociale,PartitaIva,CodiceFiscale,TipoAnagraficaId")]AnagraficaView view/*, [Bind("ContattiId,Valore,Note,AnagraficaId,TipoContattoId")] ContattiView viewC, [Bind("IndirizziId,Nazione,Regione,Provincia,Citta,Denominazione,Cap,Numero,AnagraficaId,TipoIndirizzoId")] IndirizziView viewI*/)
+        public async Task<IActionResult> Create([Bind("AnagraficaId,CodiceAnagrafica,IsAzienda,Nome,Cognome,RagioneSociale,PartitaIva,CodiceFiscale,TipoAnagraficaId")]AnagraficaView view/*, [Bind("ContattiId,Valore,Note,AnagraficaId,TipoContattoId")] ContattiView viewC/*, [Bind("IndirizziId,Nazione,Regione,Provincia,Citta,Denominazione,Cap,Numero,AnagraficaId,TipoIndirizzoId")] IndirizziView viewI*/)
         {
-            var item = ConvertFromView(view);
-            /*var item1 = ConvertFromView2(viewC);
-            var item2 = ConvertFromView3(viewI);*/
+
             if (ModelState.IsValid)
             {
-                ContattiView cnt = new ContattiView
+                /*ContattiView cnt = new ContattiView()
                 {
-                    ContattiId = 2,
-                    Valore = "Valore",
-                    Note = "Note",
-                    AnagraficaId = item.AnagraficaId,
-                    TipoContattoId = 1,
+                    ContattiId = 3,
+                    Valore = viewC.Valore,
+                    Note = viewC.Note,
+                    AnagraficaId = viewC.AnagraficaId,
+                    TipoContattoId = viewC.TipoContattoId,
                 };
 
                 IndirizziView ind = new IndirizziView
@@ -165,19 +164,22 @@ namespace AspNetMvc.Controllers
                     Numero = "333333333",
                     AnagraficaId = item.AnagraficaId,
                     TipoIndirizzoId = 1,
-                };
-                db.Add(item);
+                };*/
+                var item = ConvertFromView(view);
+                //var item1 = ConvertFromView2(viewC);
+                //var item2 = ConvertFromView3(viewI);
+                //db.Add(cnt);
                 /*db.Add(item1);
                 db.Add(item2);*/
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["TipoAnagraficaId"] = new SelectList(db.TipoAnagrafica, "TipoAnagraficaId", "Descrizione", view.TipoAnagraficaId);
+            //ViewData["TipoAnagraficaId"] = new SelectList(db.TipoAnagrafica, "TipoAnagraficaId", "Descrizione", view.TipoAnagraficaId);
             //ViewData["TipoContattoId"] = new SelectList(db.TipoContatto, "TipoContattoId", "Descrizione", viewC.TipoContattoId);
             //ViewData["TipoIndirizzoId"] = new SelectList(db.TipoIndirizzo, "TipoIndirizzoId", "Descrizione", viewI.TipoIndirizzoId);
-            var newView = new AnagraficaView(item);
-            return View(newView);
+            //var newView = new AnagraficaView(item1);
+            return View(view);
         }
 
         /*public async Task<IActionResult> CreateOld([Bind("")]AnagraficaView anagraficaView)

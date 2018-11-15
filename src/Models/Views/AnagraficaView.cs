@@ -42,10 +42,10 @@ namespace Models.Views
         public string PartitaIva { get; set; }
         public string CodiceFiscale { get; set; }
         public int TipoAnagraficaId { get; set; }
-        public TipoAnagraficaView TipoAnagrafica { get; set; }
-        //public ICollection<ContattiView> Contatti { get; set; }
-        //public ICollection<IndirizziView> Indirizzi { get; set; }
-        public ContattiView Contatti { get; set; }
-        public IndirizziView Indirizzi { get; set; }
+        public TipoAnagraficaView TipoAnagrafica {get;set;}
+        public ICollection<ContattiView> Contatti { get; set; }
+        public ICollection<IndirizziView> Indirizzi { get; set; }
+        //public ContattiView Contatti { get; set; }
+        //public TipoAnagraficaView TipoAnagrafica { get; set; }
     }
 }

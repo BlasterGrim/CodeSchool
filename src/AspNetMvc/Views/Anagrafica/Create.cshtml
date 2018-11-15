@@ -9,7 +9,9 @@ ViewData["Title"] = "Creazione Anagrafica";
         <div class="col col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <strong>@ViewData["Title"]</strong>
+                    <strong>
+                        @ViewData["Title"]
+                    </strong>
                 </div>
                 <div class="card-body card-block">
                     <form asp-action="Create" class="form-horizontal">
@@ -63,14 +65,18 @@ ViewData["Title"] = "Creazione Anagrafica";
                             <strong>Creazione contatti relativi</strong>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Contatti.Valore" class="control-label"></label>
-                            <input asp-for="Contatti.Valore" class="form-control-sm form-control" />
-                            <span asp-validation-for="Contatti.Valore" class="text-danger"></span>
+                            <label for="Valore" class="control-label"></label>
+                            <input asp-items="ViewBag.Valore" class="form-control-sm form-control" />
+                            <span validation-for="Valore" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Contatti.Note" class="control-label"></label>
-                            <input asp-for="Contatti.Note" class="form-control-sm form-control"  />
-                            <span asp-validation-for="Contatti.Note" class="text-danger"></span>
+                            <label for="Note" class="control-label"></label>
+                            <input for="Note" class="form-control-sm form-control"  />
+                            <span validation-for="Note" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="TipoContattoId" class="control-label"></label>
+                            <select for="TipoContattoId" class="form-control-sm form-control" asp-items="ViewBag.TipoContattoId"></select>
                         </div>
                         <!--fine-->
                         <!--prova form indirizzi-->
