@@ -7,7 +7,7 @@ namespace Models.Views
     {
         public IndirizziView()
         {
-            IndirizziId = -1;
+            //IndirizziId = -1;
             Nazione = null;
             Regione = null;
             Provincia = null;

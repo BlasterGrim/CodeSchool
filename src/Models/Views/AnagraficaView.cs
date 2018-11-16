@@ -8,7 +8,7 @@ namespace Models.Views
     {
         public AnagraficaView()
         {
-            AnagraficaId = -1;
+            //AnagraficaId = -1;
             CodiceAnagrafica = null;
             IsAzienda = false;
             Nome = null;
@@ -34,18 +34,41 @@ namespace Models.Views
         public int AnagraficaId { get; set; }
         
         [Required]
+        [Display(Name="Codice")]
         public string CodiceAnagrafica { get; set; }
+
+        [Required]
+        [Display(Name="È azienda?")]
         public bool IsAzienda { get; set; }
+
+        [Required]
+        [Display(Name="Nome")]
         public string Nome { get; set; }
+
+        [Required]
+        [Display(Name="Cognome")]
         public string Cognome { get; set; }
+
+        [Required]
+        [Display(Name="Ragione sociale")]
         public string RagioneSociale { get; set; }
+
+        [Required]
+        [Display(Name="Partita IVA")]
         public string PartitaIva { get; set; }
+
+        [Required]
+        [Display(Name="Codice fiscale")]
         public string CodiceFiscale { get; set; }
+
+        [Required]
+        [Display(Name="Tipo anagrafica")]
         public int TipoAnagraficaId { get; set; }
         public TipoAnagraficaView TipoAnagrafica {get;set;}
         public ICollection<ContattiView> Contatti { get; set; }
         public ICollection<IndirizziView> Indirizzi { get; set; }
-        //public ContattiView Contatti { get; set; }
-        //public TipoAnagraficaView TipoAnagrafica { get; set; }
+
+        public ContattiView Contatti2 { get; set; }
+        public IndirizziView Indirizzi2 { get; set; }
     }
 }

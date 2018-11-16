@@ -9,7 +9,7 @@ namespace Models.Views
     {
         public ContattiView()
         {
-            ContattiId = -1;
+            //ContattiId = -1;
             Valore = null;
             Note = null;
             AnagraficaId = -1;

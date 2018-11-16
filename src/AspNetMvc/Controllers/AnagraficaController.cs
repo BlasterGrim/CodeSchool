@@ -13,7 +13,11 @@ namespace AspNetMvc.Controllers
 {
     public class AnagraficaController : BaseController
     {
-        public AnagraficaController(AnagraficaContext context) : base(context) { }
+        private readonly AnagraficaContext _context;
+        public AnagraficaController(AnagraficaContext context) : base(context)
+        {
+            _context = context;
+        }
         // GET: Anagrafica
         public async Task<IActionResult> IndexOld()
         {
@@ -128,7 +132,7 @@ namespace AspNetMvc.Controllers
         public IActionResult Create()
         {
             ViewData["TipoAnagraficaId"] = new SelectList(db.TipoAnagrafica, "TipoAnagraficaId", "Descrizione");
-            //ViewData["Contatti.AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "Descrizione");
+            ViewData["TipoIndirizzoId"] = new SelectList(db.TipoIndirizzo, "TipoIndirizzoId", "Descrizione");
             ViewData["TipoContattoId"] = new SelectList(db.TipoContatto, "TipoContattoId", "Descrizione");
             return View();
         }
@@ -138,40 +142,31 @@ namespace AspNetMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AnagraficaId,CodiceAnagrafica,IsAzienda,Nome,Cognome,RagioneSociale,PartitaIva,CodiceFiscale,TipoAnagraficaId")]AnagraficaView view/*, [Bind("ContattiId,Valore,Note,AnagraficaId,TipoContattoId")] ContattiView viewC/*, [Bind("IndirizziId,Nazione,Regione,Provincia,Citta,Denominazione,Cap,Numero,AnagraficaId,TipoIndirizzoId")] IndirizziView viewI*/)
+        public async Task<IActionResult> Create([Bind("AnagraficaId,CodiceAnagrafica,IsAzienda,Nome,Cognome,RagioneSociale,PartitaIva,CodiceFiscale,TipoAnagraficaId")] AnagraficaView view, [Bind("ContattiId,Contatti2.Valore,Contatti2.Note,AnagraficaId,Contatti2.TipoContattoId")] ContattiView viewC, [Bind("IndirizziId,Nazione,Regione,Provincia,Citta,Denominazione,Cap,Numero,AnagraficaId,TipoIndirizzoId")] IndirizziView viewI)
         {
 
-            if (ModelState.IsValid)
+            viewC.AnagraficaId = view.AnagraficaId;
+            viewI.AnagraficaId = view.AnagraficaId;
+            //if (ModelState.IsValid)
             {
-                /*ContattiView cnt = new ContattiView()
-                {
-                    ContattiId = 3,
-                    Valore = viewC.Valore,
-                    Note = viewC.Note,
-                    AnagraficaId = viewC.AnagraficaId,
-                    TipoContattoId = viewC.TipoContattoId,
-                };
+                //AnagraficaView BCVM = new AnagraficaView();
+                //view.Contatti = GetContatti(viewC);
+                //view.Indirizzi = GetIndirizzi(viewI);
 
-                IndirizziView ind = new IndirizziView
-                {
-                    IndirizziId = 1,
-                    Nazione = "Italia",
-                    Regione = "Piemonte",
-                    Provincia = "To",
-                    Citta = "Torino",
-                    Denominazione = "via bobbio",
-                    Cap = "10100",
-                    Numero = "333333333",
-                    AnagraficaId = item.AnagraficaId,
-                    TipoIndirizzoId = 1,
-                };*/
                 var item = ConvertFromView(view);
+                var item1 = ConvertFromView2(viewC);
+                var item2 = ConvertFromView3(viewI);
                 //var item1 = ConvertFromView2(viewC);
                 //var item2 = ConvertFromView3(viewI);
                 //db.Add(cnt);
                 /*db.Add(item1);
                 db.Add(item2);*/
-                await db.SaveChangesAsync();
+                _context.Add(item);
+                await _context.SaveChangesAsync();
+                _context.Add(item1);
+                await _context.SaveChangesAsync();
+                _context.Add(item2);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -179,7 +174,7 @@ namespace AspNetMvc.Controllers
             //ViewData["TipoContattoId"] = new SelectList(db.TipoContatto, "TipoContattoId", "Descrizione", viewC.TipoContattoId);
             //ViewData["TipoIndirizzoId"] = new SelectList(db.TipoIndirizzo, "TipoIndirizzoId", "Descrizione", viewI.TipoIndirizzoId);
             //var newView = new AnagraficaView(item1);
-            return View(view);
+            //return View(view);
         }
 
         /*public async Task<IActionResult> CreateOld([Bind("")]AnagraficaView anagraficaView)
@@ -348,6 +343,30 @@ namespace AspNetMvc.Controllers
             t.AnagraficaId = tbl.AnagraficaId;
             t.TipoIndirizzoId = tbl.TipoIndirizzoId;
             return t;
+        }
+
+        public ICollection<ContattiView> GetContatti(ContattiView contatti)
+        {
+            List<ContattiView> bModel = new List<ContattiView>();
+            if (ModelState.IsValid)
+            {
+
+            }
+            return bModel;
+        }
+
+        public ICollection<IndirizziView> GetIndirizzi(IndirizziView indirizzi)
+        {
+            List<IndirizziView> cModel = new List<IndirizziView>();
+
+            cModel.Add(new IndirizziView()
+            {
+                IndirizziId = 1,
+                Nazione = "Ialia",
+                Regione = "Good One",
+                Provincia = "Vijay",
+            });
+            return cModel;
         }
 
     }
