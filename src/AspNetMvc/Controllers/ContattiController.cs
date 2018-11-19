@@ -7,19 +7,42 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Models.Tabelle;
+using Models.Views;
 
 namespace AspNetMvc.Controllers
 {
     public class ContattiController : BaseController
     {
-        
-        public ContattiController(AnagraficaContext context):base(context){}
+
+        public ContattiController(AnagraficaContext context) : base(context) { }
 
         // GET: Contatti
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexOld()
         {
             var anagraficaContext = db.Contatti.Include(c => c.Anagrafica).Include(c => c.TipoContatto);
             return View(await anagraficaContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            List<ContattiView> views = new List<ContattiView>();
+            var items = await db.Contatti.Include(x => x.TipoContatto).ToListAsync();
+            foreach (var item in items)
+            {
+                ContattiView con = new ContattiView()
+                {
+                    ContattiId = item.ContattiId,
+                    Valore = item.Valore,
+                    Note = item.Note,
+                    AnagraficaId = item.AnagraficaId,
+                };
+                if (item.TipoContatto != null)
+                {
+                    con.TipoContatto = new TipoContattoView(item.TipoContatto);
+                }
+                views.Add(con);
+            }
+            return View(views);
         }
 
         // GET: Contatti/Details/5

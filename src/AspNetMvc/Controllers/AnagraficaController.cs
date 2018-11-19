@@ -40,7 +40,7 @@ namespace AspNetMvc.Controllers
                     RagioneSociale = item.RagioneSociale,
                     PartitaIva = item.PartitaIva,
                     CodiceFiscale = item.CodiceFiscale,
-                    TipoAnagraficaId = item.TipoAnagraficaId
+                    TipoAnagraficaId = item.TipoAnagraficaId,
                 };
                 if (item.TipoAnagrafica != null)
                 {
@@ -50,7 +50,6 @@ namespace AspNetMvc.Controllers
                 if (contatti != null && contatti.Count > 0)
                 {
                     anag.Contatti = new List<ContattiView>();
-                    //anag.Contatti = new ContattiView();
                     foreach (var contatto in contatti)
                     {
                         ContattiView con = new ContattiView()
@@ -58,7 +57,7 @@ namespace AspNetMvc.Controllers
                             ContattiId = contatto.ContattiId,
                             Valore = contatto.Valore,
                             Note = contatto.Note,
-                            AnagraficaId = anag.AnagraficaId
+                            AnagraficaId = anag.AnagraficaId,
                         };
                         if (contatto.TipoContatto != null)
                         {
@@ -71,14 +70,12 @@ namespace AspNetMvc.Controllers
                             con.TipoContattoId = contatto.TipoContattoId;
                         }
                         anag.Contatti.Add(con);
-                        //anag.Contatti = con;
                     }
                 }
                 var indirizzi = await db.Indirizzi.Include(x => x.TipoIndirizzo).Where(x => x.AnagraficaId == item.AnagraficaId).ToListAsync();
                 if (indirizzi != null && indirizzi.Count > 0)
                 {
                     anag.Indirizzi = new List<IndirizziView>();
-                    //anag.Indirizzi = new IndirizziView();
                     foreach (var indirizzo in indirizzi)
                     {
                         IndirizziView ind = new IndirizziView()
@@ -104,7 +101,6 @@ namespace AspNetMvc.Controllers
                             ind.TipoIndirizzoId = indirizzo.TipoIndirizzoId;
                         }
                         anag.Indirizzi.Add(ind);
-                        //anag.Indirizzi = ind;
                     }
                 }
                 views.Add(anag);
@@ -122,12 +118,46 @@ namespace AspNetMvc.Controllers
             var anagrafica = await db.Anagrafica
                 .Include(a => a.TipoAnagrafica)
                 .FirstOrDefaultAsync(m => m.AnagraficaId == id);
-            if (anagrafica == null)
+            AnagraficaView anag = new AnagraficaView()
+            {
+                AnagraficaId = anagrafica.AnagraficaId,
+                CodiceAnagrafica = anagrafica.CodiceAnagrafica,
+                IsAzienda = anagrafica.IsAzienda,
+                Nome = anagrafica.Nome,
+                Cognome = anagrafica.Cognome,
+                RagioneSociale = anagrafica.RagioneSociale,
+                PartitaIva = anagrafica.PartitaIva,
+                CodiceFiscale = anagrafica.CodiceFiscale,
+                TipoAnagraficaId = anagrafica.TipoAnagraficaId,
+            };
+            if (anagrafica.TipoAnagrafica != null)
+            {
+                anag.TipoAnagrafica = new TipoAnagraficaView(anagrafica.TipoAnagrafica);
+            }
+
+            if (anag == null)
             {
                 return NotFound();
             }
-            return View(anagrafica);
+            return View(anag);
         }
+
+        /*public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            //List<AnagraficaView> views = new List<AnagraficaView>();
+            var items = await db.Anagrafica.Include(x => x.TipoAnagrafica).FirstOrDefaultAsync();
+            if (items == null)
+            {
+                return NotFound();
+            }
+            //views.Add(items);
+            return View(items);
+        }*/
+
         // GET: Anagrafica/Create
         public IActionResult Create()
         {
@@ -142,9 +172,8 @@ namespace AspNetMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AnagraficaId,CodiceAnagrafica,IsAzienda,Nome,Cognome,RagioneSociale,PartitaIva,CodiceFiscale,TipoAnagraficaId")] AnagraficaView view, [Bind("ContattiId,Contatti2.Valore,Contatti2.Note,AnagraficaId,Contatti2.TipoContattoId")] ContattiView viewC, [Bind("IndirizziId,Nazione,Regione,Provincia,Citta,Denominazione,Cap,Numero,AnagraficaId,TipoIndirizzoId")] IndirizziView viewI)
+        public async Task<IActionResult> Create([Bind("AnagraficaId,CodiceAnagrafica,IsAzienda,Nome,Cognome,RagioneSociale,PartitaIva,CodiceFiscale,TipoAnagraficaId")] AnagraficaView view, [Bind("ContattiId,Valore,Note,AnagraficaId,TipoContattoId")] ContattiView viewC, [Bind("IndirizziId,Nazione,Regione,Provincia,Citta,Denominazione,Cap,Numero,AnagraficaId,TipoIndirizzoId")] IndirizziView viewI)
         {
-
             viewC.AnagraficaId = view.AnagraficaId;
             viewI.AnagraficaId = view.AnagraficaId;
             //if (ModelState.IsValid)
@@ -163,8 +192,10 @@ namespace AspNetMvc.Controllers
                 db.Add(item2);*/
                 _context.Add(item);
                 await _context.SaveChangesAsync();
+                item1.AnagraficaId = item.AnagraficaId;
                 _context.Add(item1);
                 await _context.SaveChangesAsync();
+                item2.AnagraficaId = item.AnagraficaId;
                 _context.Add(item2);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

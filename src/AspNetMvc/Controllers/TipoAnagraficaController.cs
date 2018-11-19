@@ -8,27 +8,38 @@ using Microsoft.EntityFrameworkCore;
 using Models;
 using Models.Tabelle;
 using Models.Views;
-namespace AspNetMvc.Controllers {
-    public class TipoAnagraficaController : BaseController {
-        public TipoAnagraficaController(AnagraficaContext context) :base(context){}
+namespace AspNetMvc.Controllers
+{
+    public class TipoAnagraficaController : BaseController
+    {
+        private readonly AnagraficaContext _context;
+        public TipoAnagraficaController(AnagraficaContext context) : base(context)
+        {
+            _context = context;
+        }
         // GET: TipoAnagrafica
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> Index()
+        {
             return View(await GetConvertedListAsync());
         }
         // GET: TipoAnagrafica/Details/5
-        public async Task<IActionResult> Details(int? id) {
-            if (id == null){
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
                 return NotFound();
             }
             var item = await db.TipoAnagrafica.FirstOrDefaultAsync(m => m.TipoAnagraficaId == id);
-            if (item == null){
+            if (item == null)
+            {
                 return NotFound();
             }
             var tpAnagrafica = new TipoAnagraficaView(item);
             return View(tpAnagrafica);
         }
         // GET: TipoAnagrafica/Create
-        public IActionResult Create(){
+        public IActionResult Create()
+        {
             return View();
         }
         // POST: TipoAnagrafica/Create
@@ -36,23 +47,28 @@ namespace AspNetMvc.Controllers {
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TipoAnagraficaId,Descrizione")] TipoAnagraficaView view){
+        public async Task<IActionResult> Create([Bind("TipoAnagraficaId,Descrizione")] TipoAnagraficaView view)
+        {
             var item = ConvertFromView(view);
-            if (ModelState.IsValid){
-                db.Add(item);
-                await db.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                _context.Add(item);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             var newView = new TipoAnagraficaView(item);
             return View(newView);
         }
         // GET: TipoAnagrafica/Edit/5
-        public async Task<IActionResult> Edit(int? id){
-            if (id == null){
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
                 return NotFound();
             }
             var item = await db.TipoAnagrafica.FindAsync(id);
-            if (item == null){
+            if (item == null)
+            {
                 return NotFound();
             }
             var view = new TipoAnagraficaView(item);
@@ -63,19 +79,28 @@ namespace AspNetMvc.Controllers {
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TipoAnagraficaId,Descrizione")] TipoAnagraficaView view){
-            if (id != view.TipoAnagraficaId){
+        public async Task<IActionResult> Edit(int id, [Bind("TipoAnagraficaId,Descrizione")] TipoAnagraficaView view)
+        {
+            if (id != view.TipoAnagraficaId)
+            {
                 return NotFound();
             }
-            if (ModelState.IsValid){
-                try {
+            if (ModelState.IsValid)
+            {
+                try
+                {
                     var item = ConvertFromView(view);
                     db.Update(item);
                     await db.SaveChangesAsync();
-                } catch (DbUpdateConcurrencyException){
-                    if (!TipoAnagraficaExists(view.TipoAnagraficaId)){
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TipoAnagraficaExists(view.TipoAnagraficaId))
+                    {
                         return NotFound();
-                    } else {
+                    }
+                    else
+                    {
                         throw;
                     }
                 }
@@ -84,12 +109,15 @@ namespace AspNetMvc.Controllers {
             return View(view);
         }
         // GET: TipoAnagrafica/Delete/5
-        public async Task<IActionResult> Delete(int? id){
-            if (id == null){
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
                 return NotFound();
             }
             var item = await db.TipoAnagrafica.FirstOrDefaultAsync(m => m.TipoAnagraficaId == id);
-            if (item == null){
+            if (item == null)
+            {
                 return NotFound();
             }
             var view = new TipoAnagraficaView(item);
@@ -98,27 +126,32 @@ namespace AspNetMvc.Controllers {
         // POST: TipoAnagrafica/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id){
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
             var item = await db.TipoAnagrafica.FindAsync(id);
             db.TipoAnagrafica.Remove(item);
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        private async Task<List<TipoAnagraficaView>> GetConvertedListAsync(){
+        private async Task<List<TipoAnagraficaView>> GetConvertedListAsync()
+        {
             List<TipoAnagraficaView> lst = new List<TipoAnagraficaView>();
             var items = await db.TipoAnagrafica.ToListAsync();
-            foreach(var item in items ){
+            foreach (var item in items)
+            {
                 lst.Add(new TipoAnagraficaView(item));
             }
             return lst;
         }
-        private bool TipoAnagraficaExists(int id){
+        private bool TipoAnagraficaExists(int id)
+        {
             return db.TipoAnagrafica.Any(e => e.TipoAnagraficaId == id);
         }
-        private TipoAnagrafica ConvertFromView(TipoAnagraficaView v){
+        private TipoAnagrafica ConvertFromView(TipoAnagraficaView v)
+        {
             TipoAnagrafica t = new TipoAnagrafica();
             t.TipoAnagraficaId = v.TipoAnagraficaId;
-            t.Descrizione =v.Descrizione;
+            t.Descrizione = v.Descrizione;
             return t;
         }
     }

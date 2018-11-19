@@ -61,7 +61,6 @@ namespace Models.Views
         [Display(Name="Codice fiscale")]
         public string CodiceFiscale { get; set; }
 
-        [Required]
         [Display(Name="Tipo anagrafica")]
         public int TipoAnagraficaId { get; set; }
         public TipoAnagraficaView TipoAnagrafica {get;set;}

@@ -66,17 +66,17 @@ ViewData["Title"] = "Creazione Anagrafica";
                         </div>
                         <div class="form-group">
                             <label asp-for="Contatti2.Valore" class="control-label"></label>
-                            <input asp-for="Contatti2.Valore" class="form-control-sm form-control"/>
+                            <input asp-for="Contatti2.Valore" class="form-control-sm form-control" name="Valore"/>
                             <span validation-for="Valore" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Contatti2.Note" class="control-label"></label>
-                            <input asp-for="Contatti2.Note" class="form-control-sm form-control"/>
+                            <input asp-for="Contatti2.Note" class="form-control-sm form-control" name="Note"/>
                             <span validation-for="Note" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Contatti2.TipoContattoId" class="control-label"></label>
-                            <select asp-for="Contatti2.TipoContattoId" class="form-control-sm form-control" asp-items="ViewBag.TipoContattoId"></select>
+                            <select asp-for="Contatti2.TipoContattoId" class="form-control-sm form-control" asp-items="ViewBag.TipoContattoId" name="TipoContattoId"></select>
                         </div>
                         <!--fine-->
                         <!--prova form indirizzi-->
@@ -85,42 +85,42 @@ ViewData["Title"] = "Creazione Anagrafica";
                         </div>
                         <div class="form-group">
                             <label asp-for="Indirizzi2.Nazione" class="control-label">Nazione</label>
-                            <input asp-for="Indirizzi2.Nazione" class="form-control-sm form-control" />
+                            <input asp-for="Indirizzi2.Nazione" class="form-control-sm form-control" name="Nazione"/>
                             <span asp-validation-for="Indirizzi2.Nazione" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Indirizzi2.Regione" class="control-label">Regione</label>
-                            <input asp-for="Indirizzi2.Regione" class="form-control-sm form-control" />
+                            <input asp-for="Indirizzi2.Regione" class="form-control-sm form-control" name="Regione"/>
                             <span asp-validation-for="Indirizzi2.Regione" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Indirizzi2.Provincia" class="control-label">Provincia</label>
-                            <input asp-for="Indirizzi2.Provincia" class="form-control-sm form-control" />
+                            <input asp-for="Indirizzi2.Provincia" class="form-control-sm form-control" name="Provincia"/>
                             <span asp-validation-for="Indirizzi2.Provincia" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Indirizzi2.Citta" class="control-label">Città</label>
-                            <input asp-for="Indirizzi2.Citta" class="form-control-sm form-control" />
+                            <input asp-for="Indirizzi2.Citta" class="form-control-sm form-control" name="Citta"/>
                             <span asp-validation-for="Indirizzi2.Citta" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Indirizzi2.Denominazione" class="control-label">Denominazione</label>
-                            <input asp-for="Indirizzi2.Denominazione" class="form-control-sm form-control" />
+                            <input asp-for="Indirizzi2.Denominazione" class="form-control-sm form-control" name="Denominazione"/>
                             <span asp-validation-for="Indirizzi2.Denominazione" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Indirizzi2.Cap" class="control-label">CAP</label>
-                            <input asp-for="Indirizzi2.Cap" class="form-control-sm form-control" />
+                            <input asp-for="Indirizzi2.Cap" class="form-control-sm form-control" name="Cap"/>
                             <span asp-validation-for="Indirizzi2.Cap" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Indirizzi2.Numero" class="control-label">Numero</label>
-                            <input asp-for="Indirizzi2.Numero" class="form-control-sm form-control" />
+                            <input asp-for="Indirizzi2.Numero" class="form-control-sm form-control" name="Numero"/>
                             <span asp-validation-for="Indirizzi2.Numero" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Indirizzi2.TipoIndirizzoId" class="control-label"></label>
-                            <select asp-for="Indirizzi2.TipoIndirizzoId" class="form-control-sm form-control" asp-items="ViewBag.TipoIndirizzoId"></select>
+                            <select asp-for="Indirizzi2.TipoIndirizzoId" class="form-control-sm form-control" asp-items="ViewBag.TipoIndirizzoId" name="TipoIndirizzoId"></select>
                         </div>
                         <!--fine-->
                 </div>

@@ -39,8 +39,12 @@ namespace Models.Views
         public string Denominazione {get;set;}
         public string Cap{get;set;}
         public string Numero {get;set;}
+
+        [Display(Name="Tipo indirizzo")]
         public int AnagraficaId {get;set;}
         public AnagraficaView Anagrafica {get;set;}
+
+        [Display(Name="Tipo indirizzo")]
         public int TipoIndirizzoId {get;set;}
         public TipoIndirizzoView TipoIndirizzo {get;set;}
     }

@@ -7,19 +7,48 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Models.Tabelle;
+using Models.Views;
 
 namespace AspNetMvc.Controllers
 {
     public class IndirizziController : BaseController
     {
 
-        public IndirizziController(AnagraficaContext context) :base(context){}
+        public IndirizziController(AnagraficaContext context) : base(context) { }
 
         // GET: Indirizzi
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexOld()
         {
             var anagraficaContext = db.Indirizzi.Include(i => i.Anagrafica).Include(i => i.TipoIndirizzo);
             return View(await anagraficaContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            List<IndirizziView> views = new List<IndirizziView>();
+            var items = await db.Indirizzi.Include(x => x.TipoIndirizzo).ToListAsync();
+            foreach (var item in items)
+            {
+                IndirizziView ind = new IndirizziView()
+                {
+                    IndirizziId = item.IndirizziId,
+                    Nazione = item.Nazione,
+                    Regione = item.Regione,
+                    Provincia = item.Provincia,
+                    Citta = item.Citta,
+                    Denominazione = item.Denominazione,
+                    Cap = item.Cap,
+                    Numero = item.Numero,
+                    AnagraficaId = item.AnagraficaId,
+                    TipoIndirizzoId = item.TipoIndirizzoId,
+                };
+                if (item.TipoIndirizzo != null)
+                {
+                    ind.TipoIndirizzo = new TipoIndirizzoView(item.TipoIndirizzo);
+                }
+                views.Add(ind);
+            }
+            return View(views);
         }
 
         // GET: Indirizzi/Details/5
