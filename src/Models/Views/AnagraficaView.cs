@@ -63,6 +63,8 @@ namespace Models.Views
 
         [Display(Name="Tipo anagrafica")]
         public int TipoAnagraficaId { get; set; }
+
+        [Display(Name="Tipo anagrafica")]
         public TipoAnagraficaView TipoAnagrafica {get;set;}
         public ICollection<ContattiView> Contatti { get; set; }
         public ICollection<IndirizziView> Indirizzi { get; set; }

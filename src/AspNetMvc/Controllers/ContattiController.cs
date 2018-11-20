@@ -26,7 +26,7 @@ namespace AspNetMvc.Controllers
         public async Task<IActionResult> Index()
         {
             List<ContattiView> views = new List<ContattiView>();
-            var items = await db.Contatti.Include(x => x.TipoContatto).ToListAsync();
+            var items = await db.Contatti.Include(x => x.TipoContatto).Include(x => x.Anagrafica).ToListAsync();
             foreach (var item in items)
             {
                 ContattiView con = new ContattiView()
@@ -39,6 +39,10 @@ namespace AspNetMvc.Controllers
                 if (item.TipoContatto != null)
                 {
                     con.TipoContatto = new TipoContattoView(item.TipoContatto);
+                }
+                if (item.Anagrafica != null)
+                {
+                    con.Anagrafica = new AnagraficaView(item.Anagrafica);
                 }
                 views.Add(con);
             }
@@ -68,8 +72,8 @@ namespace AspNetMvc.Controllers
         // GET: Contatti/Create
         public IActionResult Create()
         {
-            ViewData["AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "AnagraficaId");
-            ViewData["TipoContattoId"] = new SelectList(db.TipoContatto, "TipoContattoId", "TipoContattoId");
+            ViewData["AnagraficaId"] = new SelectList(db.Anagrafica, "AnagraficaId", "CodiceFiscale");
+            ViewData["TipoContattoId"] = new SelectList(db.TipoContatto, "TipoContattoId", "Descrizione");
             return View();
         }
 

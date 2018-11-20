@@ -1,8 +1,9 @@
 @model Models.Tabelle.Anagrafica
 
 @{
-    ViewData["Title"] = "Modifica Anagrafica";
+ViewData["Title"] = "Modifica Anagrafica";
 }
+
 <div class="container-fluid">
     <div class="row">
         <div class="col col-md-12">
@@ -11,19 +12,20 @@
                     <strong>@ViewData["Title"]</strong>
                 </div>
                 <div class="card-body card-block">
-                    <form asp-action="Edit" class="form-horizontal"> 
+                    <form asp-action="Edit" class="form-horizontal">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="AnagraficaId" />
                         <div class="form-group">
                             <label asp-for="CodiceAnagrafica" class="control-label"></label>
-                            <input asp-for="CodiceAnagrafica" class="form-control-sm form-control />
+                            <input asp-for="CodiceAnagrafica" class="form-control-sm form-control" />
                             <span asp-validation-for="CodiceAnagrafica" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-check">
                                 <div class="checkbox">
                                     <label for="IsAzienda" class="form-check-label ">
-                                        <input asp-for="IsAzienda" class="form-check-input"> @Html.DisplayNameFor(model => model.IsAzienda)
+                                        <input asp-for="IsAzienda" class="form-check-input"> @Html.DisplayNameFor(model
+                                        => model.IsAzienda)
                                     </label>
                                 </div>
                             </div>
@@ -55,18 +57,20 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="TipoAnagraficaId" class="control-label"></label>
-                            <select asp-for="TipoAnagraficaId" class ="form-control-sm form-control" asp-items="ViewBag.TipoAnagraficaId"></select>
+                            <select asp-for="TipoAnagraficaId" class="form-control-sm form-control" asp-items="ViewBag.TipoAnagraficaId"></select>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-action="Index" class="btn btn-danger"><i class="fa fa-caret-square-o-left"></i>
+                                Indietro</a>
+                            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Salva</button>
                         </div>
                     </form>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-success" ><i class="fa fa-save"></i> Salva</button>
-                    <a asp-action="Index" class="btn btn-danger"><i class="fa fa-caret-square-o-left"></i> Indietro</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

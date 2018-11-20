@@ -1,42 +1,58 @@
 @model Models.Tabelle.Contatti
 
 @{
-    ViewData["Title"] = "Details";
+ViewData["Title"] = "Dettaglio Contatti";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Contatti</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Valore)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Valore)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Note)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Note)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Anagrafica)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Anagrafica.AnagraficaId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoContatto)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TipoContatto.TipoContattoId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ContattiId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>@ViewData["Title"]</strong>
+                </div>
+                <div class="card-body card-block">
+                    <div class="form-horizontal">
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.Valore)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.Valore)</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.Note)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.Note)</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.Anagrafica)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.Anagrafica.AnagraficaId)</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label class=" form-control-label">@Html.DisplayNameFor(model => model.TipoContatto)</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">@Html.DisplayFor(model => model.TipoContatto.TipoContattoId)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a asp-action="Edit" asp-route-id="@Model.AnagraficaId" class="btn btn-success"><i class="zmdi zmdi-edit"></i>
+                        Modifica</a>
+                    <a asp-action="Index" class="btn btn-danger"><i class="fa fa-caret-square-o-left"></i> Indietro</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

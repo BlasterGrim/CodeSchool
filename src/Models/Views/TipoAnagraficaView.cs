@@ -16,8 +16,9 @@ namespace Models.Views
             Descrizione = tbl.Descrizione;
         }
         public int TipoAnagraficaId { get; set; }
+        
         [Required]
-        [Display(Name = "Tipo Anagrafica")]
+        [Display(Name = "Descrizione")]
         public string Descrizione { get; set; }
     }
 }

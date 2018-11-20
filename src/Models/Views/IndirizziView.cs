@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using Models.Tabelle;
 
 namespace Models.Views
@@ -40,12 +41,14 @@ namespace Models.Views
         public string Cap{get;set;}
         public string Numero {get;set;}
 
-        [Display(Name="Tipo indirizzo")]
+        [Display(Name="Tipo anagrafica")]
         public int AnagraficaId {get;set;}
         public AnagraficaView Anagrafica {get;set;}
 
         [Display(Name="Tipo indirizzo")]
         public int TipoIndirizzoId {get;set;}
+
+        [Display(Name="Tipo Indirizzo")]
         public TipoIndirizzoView TipoIndirizzo {get;set;}
     }
 }

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Models.Tabelle;
 
 namespace Models.Views
@@ -15,6 +16,9 @@ namespace Models.Views
             Descrizione = tbl.Descrizione;
         }
         public int TipoContattoId { get; set; }
+
+        [Required]
+        [Display(Name = "Tipo Contatto")]
         public string Descrizione { get; set; }
 
     }
